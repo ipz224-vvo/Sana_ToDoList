@@ -1,0 +1,24 @@
+﻿@using ToDoList.DAL.Models;
+@model List<ToDoItem>
+@{
+    ViewData["Title"] = "Index";
+    
+}
+
+<style>
+    .table {
+        background-color:lightblue;
+    }
+</style>
+<a asp-controller="ToDoItem" asp-action="CreateItem">Створити таск</a>
+<div class = "table">
+    @foreach(var item in @Model)
+    {
+        <p>@item.Id  -  @item.Text - @item.Category.Name</p>
+    }    
+</div>
+
+
+
+
+
