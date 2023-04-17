@@ -1,4 +1,8 @@
-﻿@model ToDoList.DAL.Models.ToDoItem
+﻿
+@using ToDoList.DAL.Implementations;
+@using ToDoList.DAL.Models;
+@model ToDoItem
+
 
 <h4>Створити таск</h4>
 <hr />
@@ -6,26 +10,37 @@
     <div class="col-md-4">
         <form asp-action="CreateItem">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
             <div class="form-group">
-                <label asp-for="Text" class="control-label">Текст таска:</label>
+                <label asp-for="Text" class="control-label">Текст таску: </label>
                 <input asp-for="Text" class="form-control" />
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Due_Date" class="control-label">До котрої дати виконати завдання: </label>
+                <label asp-for="Due_Date" class="control-label">Дата до котрої треба виконати завдання: </label>
                 <input asp-for="Due_Date" class="form-control" />
                 <span asp-validation-for="Due_Date" class="text-danger"></span>
             </div>
+            <!--Створення випадаючого меню з категоріями-->
+            @{
+                var categories = (new CategoryDAL()).GetCategories();
+                <select asp-for="Category">
+                    @foreach(var item in categories)
+                    {
+                        <option>@item.Name</option>
+                    }
+                </select>
+            }
+            
             <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <input asp-for="CategoryId" class="form-control" />
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Set_Date" class="control-label">Дата встановлення таска: </label>
+                <label asp-for="Set_Date" class="control-label"></label>
                 <input asp-for="Set_Date" class="form-control" />
                 <span asp-validation-for="Set_Date" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Is_Finished" /> Чи завершено завдання?
+                    
+                </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -1,0 +1,79 @@
+﻿@using ToDoList.DAL.Implementations;
+@model ToDoList.DAL.Models.ToDoItem
+
+@{
+	int id = Convert.ToInt32(this.ViewContext.RouteData.Values["id"]);
+	var item_start = (new ToDoItemDAL()).GetToDoItemById(id);
+}
+
+<style>
+	select {
+		margin-top: 5px;
+	}
+</style>
+
+<h4>Змінити таск @id</h4>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="EditItem">
+			
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Text" class="control-label"></label>
+				<input asp-for="Text" class="form-control" value="@item_start.Text" />
+				<span asp-validation-for="Text" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Due_Date" class="control-label"></label>
+				<input asp-for="Due_Date" class="form-control" value="@ToDoItemDAL.DateTimeToString(item_start.Due_Date)" />
+				<span asp-validation-for="Due_Date" class="text-danger"></span>
+			</div>
+			@{
+				var categories = (new CategoryDAL()).GetCategories();
+				<select asp-for="Category">
+
+					@foreach (var item in categories)
+					{
+						@if(item.Name == item_start.Category.Name)
+						{
+							<option selected="selected">@item.Name</option>
+						}
+						else
+						{
+							<option>@item.Name</option>
+
+						}
+					}
+					
+				</select>
+			}
+			<div class="form-group">
+				<label asp-for="Set_Date" class="control-label"></label>
+				<input asp-for="Set_Date" class="form-control" value="@ToDoItemDAL.DateTimeToString(item_start.Set_Date)" />
+				<span asp-validation-for="Set_Date" class="text-danger"></span>
+			</div>
+			<div class="form-group form-check">
+				<label class="form-check-label">
+					@if (item_start.Is_Finished)
+					{
+						<input class="form-check-input" asp-for="Is_Finished" checked/>
+					}
+					else
+					{
+						<input class="form-check-input" asp-for="Is_Finished"/>
+					}
+					Завдання виконане?
+				</label>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+

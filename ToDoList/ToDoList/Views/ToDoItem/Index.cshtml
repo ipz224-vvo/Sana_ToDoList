@@ -1,22 +1,65 @@
 ﻿@using ToDoList.DAL.Models;
 @model List<ToDoItem>
 @{
-    ViewData["Title"] = "Index";
-    
+	ViewData["Title"] = "Index";
+	
 }
 
 <style>
-    .table {
-        background-color:lightblue;
-    }
+	.table {
+		background-color:lightblue;
+		display: grid;
+		grid-template-columns: 1fr 10fr 4fr 4fr 4fr 6fr;
+		overflow-wrap: break-word;
+		padding: 5px;
+		text-align:center;
+	}
+	.grid-row{
+		
+	}
+	.grid-cell{
+		border-bottom: solid 1px black;
+	}
+	.grid-cell-header{
+		border-bottom: solid 5px black;
+	}
+	
 </style>
-<a asp-controller="ToDoItem" asp-action="CreateItem">Створити таск</a>
+
 <div class = "table">
-    @foreach(var item in @Model)
-    {
-        <p>@item.Id  -  @item.Text - @item.Category.Name</p>
-    }    
+
+	<div class="grid-cell-header">Is finished</div>
+	<div class="grid-cell-header">Text</div>
+	<div class="grid-cell-header">Due date</div>
+	<div class="grid-cell-header">Name of category</div>
+	<div class="grid-cell-header">Date of set</div>
+	<div></div>
+	
+	@foreach(var item in @Model)
+	{
+		<div class="grid-cell">
+			@if (item.Is_Finished)
+			{
+				
+			}
+			else
+			{
+				
+			}
+			@item.Is_Finished</div>
+		<div class="grid-cell">@item.Text</div>
+		<div class="grid-cell">@item.Due_Date</div>
+		<div class="grid-cell">@item.Category.Name</div>
+		<div class="grid-cell">@item.Set_Date</div>
+		<div class="grid-cell">
+			<a asp-action="EditItem" target="_blank" asp-route-id="@item.Id">Змінити</a>
+			|
+			<a asp-action="DeleteItem" target="_parent">Видалити</a>
+		</div>
+	}    
 </div>
+
+<a asp-controller="ToDoItem" asp-action="CreateItem" target="_blank">Створити таск</a>
 
 
 

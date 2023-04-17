@@ -10,14 +10,14 @@ namespace ToDoList.DAL.Implementations
         {
             using (var connection = DBConnection.CreateConnection())
             {
-                return connection.Query<Category>("SELECT * FROM [Category]").ToList();
+                return connection.Query<Category>("SELECT * FROM [Categories]").ToList();
             }
         }
         public Category GetCategoryById(int id)
         {
             using (var connection = DBConnection.CreateConnection())
             {
-                return connection.QueryFirstOrDefault<Category>("SELECT * FROM [Category] WHERE Id=@Id", new { Id = id });
+                return connection.QueryFirstOrDefault<Category>("SELECT * FROM [Categories] WHERE Id=@Id", new { Id = id });
             }
         }
     }
