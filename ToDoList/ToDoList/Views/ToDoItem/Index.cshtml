@@ -54,7 +54,7 @@
 		<div class="grid-cell">
 			<a asp-action="EditItem" target="_blank" asp-route-id="@item.Id">Змінити</a>
 			|
-			<a asp-action="DeleteItem" target="_parent">Видалити</a>
+			<a asp-action="DeleteItem" asp-route-id="@item.Id">Видалити</a>
 		</div>
 	}    
 </div>

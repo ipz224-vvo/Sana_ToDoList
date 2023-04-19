@@ -147,15 +147,16 @@ namespace ToDoList.Controllers
 		}
 
 		// GET: TaskController/Delete/5
-		public ActionResult Delete(int id)
+		public ActionResult DeleteItem(int id)
 		{
-			return View();
+			(new ToDoItemDAL()).DeleteToDoItem(id);
+			return RedirectToAction(nameof(Index));
 		}
 
 		// POST: TaskController/Delete/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int id, IFormCollection collection)
+		public ActionResult DeleteItem(int id, IFormCollection collection)
 		{
 			try
 			{

@@ -76,5 +76,12 @@ namespace ToDoList.DAL.Implementations
 					});
 			}
 		}
+		public void DeleteToDoItem(int id)
+		{
+			using (var connection = DBConnection.CreateConnection())
+			{
+				var ent = connection.QueryFirstOrDefault<ToDoItem>("DELETE FROM [Tasks] WHERE Id=@Id", new { Id = id });
+			}
+		}
 	}
 }
