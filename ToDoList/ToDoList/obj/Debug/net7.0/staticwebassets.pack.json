@@ -13,6 +13,14 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Git\\ipz_vvo\\Sana\\Projects\\ToDoList\\ToDoList\\ToDoList\\wwwroot\\images\\bin.png",
+      "PackagePath": "staticwebassets\\images\\bin.png"
+    },
+    {
+      "Id": "C:\\Git\\ipz_vvo\\Sana\\Projects\\ToDoList\\ToDoList\\ToDoList\\wwwroot\\images\\school.png",
+      "PackagePath": "staticwebassets\\images\\school.png"
+    },
+    {
       "Id": "C:\\Git\\ipz_vvo\\Sana\\Projects\\ToDoList\\ToDoList\\ToDoList\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

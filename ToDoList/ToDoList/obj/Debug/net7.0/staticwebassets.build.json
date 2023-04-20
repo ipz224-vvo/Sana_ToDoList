@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "mquv8EPY6UcCFKtijl980xt1w7WZkX5nSYAKDowl2Rc=",
+  "Hash": "74CkvF5Ss7Xb5eEw2chV1wKqKmPBH2plRG9Z26iVBcc=",
   "Source": "ToDoList",
   "BasePath": "_content/ToDoList",
   "Mode": "Default",
@@ -83,6 +83,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Git\\ipz_vvo\\Sana\\Projects\\ToDoList\\ToDoList\\ToDoList\\wwwroot\\images\\bin.png",
+      "SourceId": "ToDoList",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Git\\ipz_vvo\\Sana\\Projects\\ToDoList\\ToDoList\\ToDoList\\wwwroot\\",
+      "BasePath": "_content/ToDoList",
+      "RelativePath": "images/bin.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\bin.png"
+    },
+    {
+      "Identity": "C:\\Git\\ipz_vvo\\Sana\\Projects\\ToDoList\\ToDoList\\ToDoList\\wwwroot\\images\\school.png",
+      "SourceId": "ToDoList",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Git\\ipz_vvo\\Sana\\Projects\\ToDoList\\ToDoList\\ToDoList\\wwwroot\\",
+      "BasePath": "_content/ToDoList",
+      "RelativePath": "images/school.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\school.png"
     },
     {
       "Identity": "C:\\Git\\ipz_vvo\\Sana\\Projects\\ToDoList\\ToDoList\\ToDoList\\wwwroot\\js\\site.js",

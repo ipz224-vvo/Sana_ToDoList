@@ -13,19 +13,43 @@ namespace ToDoList.Controllers
 		{
 			ToDoItemDAL toDoItemDAL = new ToDoItemDAL();
 			var temp = toDoItemDAL.GetToDoItems();
+
+			var sorted = from item in temp
+						 orderby item.Due_Date ascending
+						 select item;
+			var sorted_list = sorted.ToList();
+			for (int i = 0; i < sorted_list.Count(); i++)
+			{
+				var item = sorted_list[i];
+				if (item.Due_Date == null)
+				{
+					sorted_list.RemoveAt(i);
+					sorted_list.Add(item);
+				}
+			}
+			temp = (from item in sorted_list
+					orderby item.Is_Finished
+					select item).ToList<ToDoItem>();
 			return View(temp);
 		}
 
-		// GET: TaskController/Details/5
-		public ActionResult Details(int id)
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		// POST: TaskController/Details/5
+		public ActionResult ChangeStatusToDoItem(int id)
 		{
-			return View();
+			ToDoItem item = (new ToDoItemDAL()).GetToDoItemById(id);
+			if (item.Is_Finished)
+				item.Is_Finished = false;
+			else
+				item.Is_Finished = true;
+			(new ToDoItemDAL()).EditToDoItem(item);
+			return RedirectToAction(nameof(Index));
 		}
 
 		// GET: TaskController/Create
 		public ActionResult CreateItem()
 		{
-
 			return View();
 		}
 

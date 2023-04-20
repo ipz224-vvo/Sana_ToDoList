@@ -17,44 +17,55 @@
 	.grid-row{
 		
 	}
+	.grid-cell, .grid-cell-header{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 	.grid-cell{
 		border-bottom: solid 1px black;
 	}
 	.grid-cell-header{
+		
 		border-bottom: solid 5px black;
 	}
-	
+	a > img, a {
+		width: 40px;
+		height: 40px;
+	}
 </style>
 
 <div class = "table">
 
-	<div class="grid-cell-header">Is finished</div>
-	<div class="grid-cell-header">Text</div>
-	<div class="grid-cell-header">Due date</div>
-	<div class="grid-cell-header">Name of category</div>
-	<div class="grid-cell-header">Date of set</div>
+	<div class="grid-cell-header">Таск виконано?</div>
+	<div class="grid-cell-header">Текст таску</div>
+	<div class="grid-cell-header">Дата завершення</div>
+	<div class="grid-cell-header">Категорія</div>
+	<div class="grid-cell-header">Дата додавання таску</div>
 	<div></div>
 	
 	@foreach(var item in @Model)
 	{
 		<div class="grid-cell">
+			<form asp-controller="ToDoItem" asp-action="ChangeStatusToDoItem" name="form1" asp-route-id="@item.Id">
 			@if (item.Is_Finished)
 			{
-				
+				<input asp-for="@item.Is_Finished" onclick="this.form.submit()" value="@item.Is_Finished" />
 			}
 			else
 			{
-				
+				<input asp-for="@item.Is_Finished" onclick="this.form.submit()" value="@item.Is_Finished"/>
 			}
-			@item.Is_Finished</div>
+			
+			</form>
+		</div>
 		<div class="grid-cell">@item.Text</div>
 		<div class="grid-cell">@item.Due_Date</div>
 		<div class="grid-cell">@item.Category.Name</div>
 		<div class="grid-cell">@item.Set_Date</div>
 		<div class="grid-cell">
-			<a asp-action="EditItem" target="_blank" asp-route-id="@item.Id">Змінити</a>
-			|
-			<a asp-action="DeleteItem" asp-route-id="@item.Id">Видалити</a>
+			<a asp-action="EditItem" target="_blank" asp-route-id="@item.Id"><img src="~/images/school.png" alt="Change"/></a>|
+			<a asp-action="DeleteItem" asp-route-id="@item.Id"><img src="~/images/bin.png" alt="Delete"/></a>
 		</div>
 	}    
 </div>
