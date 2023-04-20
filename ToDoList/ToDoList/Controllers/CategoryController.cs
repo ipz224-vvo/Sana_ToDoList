@@ -74,6 +74,14 @@ namespace ToDoList.Controllers
         // GET: CategoryController/Delete/5
         public ActionResult DeleteCategory(int id)
         {
+            var tasks = (new ToDoItemDAL()).GetToDoItems();
+            foreach (var task in tasks)
+            {
+                if (task.CategoryId == id)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
             (new CategoryDAL()).DeleteCategory(id);
             return RedirectToAction(nameof(Index));
 

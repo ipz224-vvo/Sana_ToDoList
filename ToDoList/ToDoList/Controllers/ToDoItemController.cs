@@ -167,7 +167,9 @@ namespace ToDoList.Controllers
         // GET: TaskController/Delete/5
         public ActionResult DeleteItem(int id)
         {
+
             (new ToDoItemDAL()).DeleteToDoItem(id);
+
             return RedirectToAction(nameof(Index));
         }
 
