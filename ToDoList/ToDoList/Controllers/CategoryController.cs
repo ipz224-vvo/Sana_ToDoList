@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using ToDoList.DAL.Implementations;
 
 namespace ToDoList.Controllers
 {
@@ -8,7 +8,8 @@ namespace ToDoList.Controllers
         // GET: CategoryController
         public ActionResult Index()
         {
-            return View();
+            var listOfCategoryes = (new CategoryDAL()).GetCategories();
+            return View(listOfCategoryes);
         }
 
         // GET: CategoryController/Details/5
