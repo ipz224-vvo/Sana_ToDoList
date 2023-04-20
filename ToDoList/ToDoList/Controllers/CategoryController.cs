@@ -74,7 +74,9 @@ namespace ToDoList.Controllers
         // GET: CategoryController/Delete/5
         public ActionResult DeleteCategory(int id)
         {
-            return View();
+            (new CategoryDAL()).DeleteCategory(id);
+            return RedirectToAction(nameof(Index));
+
         }
 
         // POST: CategoryController/Delete/5
