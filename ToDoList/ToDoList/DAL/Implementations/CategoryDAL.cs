@@ -24,7 +24,7 @@ namespace ToDoList.DAL.Implementations
         {
             using (var connection = DBConnection.CreateConnection())
             {
-                connection.Query<ToDoItem>("INSERT INTO [Categories] (Name, Description) " +
+                connection.Query<Category>("INSERT INTO [Categories] (Name, Description) " +
                     "VALUES (@Name, @Description)",
                     new
                     {

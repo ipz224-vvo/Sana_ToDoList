@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToDoList.DAL.Implementations;
+using ToDoList.DAL.Models;
 
 namespace ToDoList.Controllers
 {
@@ -19,7 +20,7 @@ namespace ToDoList.Controllers
         }
 
         // GET: CategoryController/Create
-        public ActionResult Create()
+        public ActionResult CreateCategory()
         {
             return View();
         }
@@ -27,8 +28,13 @@ namespace ToDoList.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult CreateCategory(IFormCollection collection)
         {
+
+            var item = new Category();
+            item.Name = collection["Name"].ToString();
+            item.Description = collection["Description"].ToString();
+            (new CategoryDAL()).AddCategory(item);
             try
             {
                 return RedirectToAction(nameof(Index));
