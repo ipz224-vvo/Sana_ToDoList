@@ -37,8 +37,8 @@ namespace ToDoList.DAL.Implementations
         {
             using (var connection = DBConnection.CreateConnection())
             {
-                connection.Query<ToDoItem>("UPDATE [Categories] " +
-                    "SET Name = @Name, Description = @Description" +
+                connection.Query<Category>("UPDATE [Categories] " +
+                    "SET Name = @Name, Description = @Description " +
                     "Where Id = @Id",
                     new
                     {

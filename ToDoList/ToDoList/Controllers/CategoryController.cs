@@ -46,7 +46,7 @@ namespace ToDoList.Controllers
         }
 
         // GET: CategoryController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult EditCategory(int id)
         {
             return View();
         }
@@ -54,8 +54,13 @@ namespace ToDoList.Controllers
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult EditCategory(int id, IFormCollection collection)
         {
+            var item = new Category();
+            item.Id = id;
+            item.Name = collection["Name"].ToString();
+            item.Description = collection["Description"].ToString();
+            (new CategoryDAL()).EditCategory(item);
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -67,7 +72,7 @@ namespace ToDoList.Controllers
         }
 
         // GET: CategoryController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult DeleteCategory(int id)
         {
             return View();
         }
@@ -75,7 +80,7 @@ namespace ToDoList.Controllers
         // POST: CategoryController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteCategory(int id, IFormCollection collection)
         {
             try
             {
