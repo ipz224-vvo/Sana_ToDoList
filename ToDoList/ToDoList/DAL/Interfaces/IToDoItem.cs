@@ -2,9 +2,9 @@
 
 namespace ToDoList.DAL.Interfaces
 {
-    public interface IToDoItem
+    /*public interface IToDoItem
     {
         ToDoItem GetToDoItemById(int id);
         List<ToDoItem> GetToDoItems();
-    }
+    }*/
 }

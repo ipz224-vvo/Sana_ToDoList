@@ -9,14 +9,8 @@ namespace ToDoList.Controllers
         // GET: CategoryController
         public ActionResult Index()
         {
-            var listOfCategoryes = (new CategoryDAL()).GetCategories();
+            var listOfCategoryes = CategoryDAL.GetCategories();
             return View(listOfCategoryes);
-        }
-
-        // GET: CategoryController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
         }
 
         // GET: CategoryController/Create
@@ -34,7 +28,7 @@ namespace ToDoList.Controllers
             var item = new Category();
             item.Name = collection["Name"].ToString();
             item.Description = collection["Description"].ToString();
-            (new CategoryDAL()).AddCategory(item);
+            CategoryDAL.AddCategory(item);
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -60,7 +54,7 @@ namespace ToDoList.Controllers
             item.Id = id;
             item.Name = collection["Name"].ToString();
             item.Description = collection["Description"].ToString();
-            (new CategoryDAL()).EditCategory(item);
+            CategoryDAL.EditCategory(item);
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -74,7 +68,7 @@ namespace ToDoList.Controllers
         // GET: CategoryController/Delete/5
         public ActionResult DeleteCategory(int id)
         {
-            var tasks = (new ToDoItemDAL()).GetToDoItems();
+            var tasks = ToDoItemDAL.GetToDoItems();
             foreach (var task in tasks)
             {
                 if (task.CategoryId == id)
@@ -82,7 +76,7 @@ namespace ToDoList.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            (new CategoryDAL()).DeleteCategory(id);
+            CategoryDAL.DeleteCategory(id);
             return RedirectToAction(nameof(Index));
 
         }
@@ -92,14 +86,7 @@ namespace ToDoList.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteCategory(int id, IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

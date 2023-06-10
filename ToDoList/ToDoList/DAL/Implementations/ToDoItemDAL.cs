@@ -4,8 +4,15 @@ using ToDoList.DAL.Models;
 
 namespace ToDoList.DAL.Implementations
 {
-    public class ToDoItemDAL : IToDoItem
+    public class ToDoItemDAL 
     {
+        public string TypeOfStorage;
+        public ToDoItemDAL() { }
+        public ToDoItemDAL(string typeOfStorage)
+        {
+            this.TypeOfStorage = typeOfStorage;
+        }
+
         public static string DateTimeToString(DateTime? dateTime)
         {
             DateTime temp_date;
@@ -17,7 +24,7 @@ namespace ToDoList.DAL.Implementations
             }
             return null;
         }
-        public ToDoItem GetToDoItemById(int id)
+        public static ToDoItem GetToDoItemById(int id)
         {
             using (var connection = DBConnection.CreateConnection())
             {
@@ -26,7 +33,7 @@ namespace ToDoList.DAL.Implementations
                 return ent;
             }
         }
-        public List<ToDoItem> GetToDoItems()
+        public static List<ToDoItem> GetToDoItems()
         {
             using (var connection = DBConnection.CreateConnection())
             {
@@ -40,7 +47,7 @@ namespace ToDoList.DAL.Implementations
                 return entyties;
             }
         }
-        public void AddToDoItem(ToDoItem toDoItem)
+        public static void AddToDoItem(ToDoItem toDoItem)
         {
             using (var connection = DBConnection.CreateConnection())
             {
@@ -56,7 +63,7 @@ namespace ToDoList.DAL.Implementations
                     });
             }
         }
-        public void EditToDoItem(ToDoItem toDoItem)
+        public static void EditToDoItem(ToDoItem toDoItem)
         {
             using (var connection = DBConnection.CreateConnection())
             {
@@ -74,7 +81,7 @@ namespace ToDoList.DAL.Implementations
                     });
             }
         }
-        public void DeleteToDoItem(int id)
+        public static void DeleteToDoItem(int id)
         {
             using (var connection = DBConnection.CreateConnection())
             {

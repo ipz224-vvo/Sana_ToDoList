@@ -3,7 +3,7 @@
 
 @{
     int id = Convert.ToInt32(this.ViewContext.RouteData.Values["id"]);
-    var item_start = (new CategoryDAL()).GetCategoryById(id);
+    var item_start = CategoryDAL.GetCategoryById(id);
 }
 
 <h4>Category</h4>

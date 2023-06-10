@@ -35,7 +35,7 @@
             </div>
             <!--Створення випадаючого меню з категоріями-->
             @{
-                var categories = (new CategoryDAL()).GetCategories();
+                var categories = CategoryDAL.GetCategories();
                 
                 <div>Вибір категорії: </div>
                 <select asp-for="Category">

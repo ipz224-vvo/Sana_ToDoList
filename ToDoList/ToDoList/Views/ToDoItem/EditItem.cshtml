@@ -3,7 +3,7 @@
 
 @{
 	int id = Convert.ToInt32(this.ViewContext.RouteData.Values["id"]);
-	var item_start = (new ToDoItemDAL()).GetToDoItemById(id);
+	var item_start = ToDoItemDAL.GetToDoItemById(id);
 }
 
 <style>
@@ -30,7 +30,7 @@
 				<span asp-validation-for="Due_Date" class="text-danger"></span>
 			</div>
 			@{
-				var categories = (new CategoryDAL()).GetCategories();
+				var categories = CategoryDAL.GetCategories();
 				<select asp-for="Category">
 
 					@foreach (var item in categories)

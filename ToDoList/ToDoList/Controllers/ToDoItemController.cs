@@ -11,8 +11,8 @@ namespace ToDoList.Controllers
         // GET: TaskController
         public ActionResult Index()
         {
-            ToDoItemDAL toDoItemDAL = new ToDoItemDAL();
-            var temp = toDoItemDAL.GetToDoItems();
+            
+            var temp = ToDoItemDAL.GetToDoItems();
 
             var sorted = from item in temp
                          orderby item.Due_Date ascending
@@ -38,12 +38,12 @@ namespace ToDoList.Controllers
         // POST: TaskController/Details/5
         public ActionResult ChangeStatusToDoItem(int id)
         {
-            ToDoItem item = (new ToDoItemDAL()).GetToDoItemById(id);
+            ToDoItem item = ToDoItemDAL.GetToDoItemById(id);
             if (item.Is_Finished)
                 item.Is_Finished = false;
             else
                 item.Is_Finished = true;
-            (new ToDoItemDAL()).EditToDoItem(item);
+            ToDoItemDAL.EditToDoItem(item);
             return RedirectToAction(nameof(Index));
         }
 
@@ -59,7 +59,7 @@ namespace ToDoList.Controllers
         public ActionResult CreateItem(IFormCollection collection)
         {
 
-            var categoryes = (new CategoryDAL()).GetCategories();
+            var categoryes = CategoryDAL.GetCategories();
             var item = new ToDoItem();
             item.Text = collection["Text"].ToString();
 
@@ -95,8 +95,7 @@ namespace ToDoList.Controllers
                 }
             }
 
-            ToDoItemDAL toDoItemDAL = new ToDoItemDAL();
-            toDoItemDAL.AddToDoItem(item);
+            ToDoItemDAL.AddToDoItem(item);
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -118,7 +117,7 @@ namespace ToDoList.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditItem(int id, IFormCollection collection)
         {
-            var categoryes = (new CategoryDAL()).GetCategories();
+            var categoryes = CategoryDAL.GetCategories();
             var item = new ToDoItem();
             item.Id = id;
             item.Text = collection["Text"].ToString();
@@ -151,9 +150,7 @@ namespace ToDoList.Controllers
                     break;
                 }
             }
-
-            ToDoItemDAL toDoItemDAL = new ToDoItemDAL();
-            toDoItemDAL.EditToDoItem(item);
+            ToDoItemDAL.EditToDoItem(item);
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -168,7 +165,7 @@ namespace ToDoList.Controllers
         public ActionResult DeleteItem(int id)
         {
 
-            (new ToDoItemDAL()).DeleteToDoItem(id);
+            ToDoItemDAL.DeleteToDoItem(id);
 
             return RedirectToAction(nameof(Index));
         }
@@ -178,14 +175,7 @@ namespace ToDoList.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteItem(int id, IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

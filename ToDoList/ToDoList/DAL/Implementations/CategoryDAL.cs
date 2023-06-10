@@ -4,23 +4,23 @@ using ToDoList.DAL.Models;
 
 namespace ToDoList.DAL.Implementations
 {
-    public class CategoryDAL : ICategory
+    public class CategoryDAL 
     {
-        public List<Category> GetCategories()
+        public static List<Category> GetCategories()
         {
             using (var connection = DBConnection.CreateConnection())
             {
                 return connection.Query<Category>("SELECT * FROM [Categories]").ToList();
             }
         }
-        public Category GetCategoryById(int id)
+        public static Category GetCategoryById(int id)
         {
             using (var connection = DBConnection.CreateConnection())
             {
                 return connection.QueryFirstOrDefault<Category>("SELECT * FROM [Categories] WHERE Id=@Id", new { Id = id });
             }
         }
-        public void AddCategory(Category category)
+        public static void AddCategory(Category category)
         {
             using (var connection = DBConnection.CreateConnection())
             {
@@ -33,7 +33,7 @@ namespace ToDoList.DAL.Implementations
                     });
             }
         }
-        public void EditCategory(Category category)
+        public static void EditCategory(Category category)
         {
             using (var connection = DBConnection.CreateConnection())
             {
@@ -48,7 +48,7 @@ namespace ToDoList.DAL.Implementations
                     });
             }
         }
-        public void DeleteCategory(int id)
+        public static void DeleteCategory(int id)
         {
             using (var connection = DBConnection.CreateConnection())
             {

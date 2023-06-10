@@ -2,9 +2,9 @@
 
 namespace ToDoList.DAL.Interfaces
 {
-    public interface ICategory
+    /*public interface ICategory
     {
         List<Category> GetCategories();
         Category GetCategoryById(int id);
-    }
+    }*/
 }
