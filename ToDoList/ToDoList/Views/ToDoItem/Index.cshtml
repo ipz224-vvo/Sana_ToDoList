@@ -1,39 +1,62 @@
-﻿@using ToDoList.DAL.Models;
+﻿@using ToDoList.DAL.Implementations;
+@using ToDoList.DAL.Models;
 @model List<ToDoItem>
 @{
 	ViewData["Title"] = "Index";
-	
+
 }
 
 <style>
 	.table {
-		background-color:lightblue;
-		display: grid;
-		grid-template-columns: 1fr 10fr 4fr 4fr 4fr 6fr;
-		overflow-wrap: break-word;
-		padding: 5px;
-		text-align:center;
+	background-color:lightblue;
+	display: grid;
+	grid-template-columns: 1fr 10fr 4fr 4fr 4fr 6fr;
+	overflow-wrap: break-word;
+	padding: 5px;
+	text-align:center;
 	}
 	.grid-row{
-		
+
 	}
 	.grid-cell, .grid-cell-header{
-		display: flex;
-		justify-content: center;
-		align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	}
 	.grid-cell{
-		border-bottom: solid 1px black;
+	border-bottom: solid 1px black;
 	}
 	.grid-cell-header{
-		
-		border-bottom: solid 5px black;
+
+	border-bottom: solid 5px black;
 	}
 	a > img, a {
-		width: 40px;
-		height: 40px;
+	width: 40px;
+	height: 40px;
 	}
 </style>
+
+<form asp-controller="ToDoItem" asp-action="ChangeStorageType" method="post" >
+	<select name="selectType" onblur="this.form.submit()">
+		@{
+		if (ToDoItemDAL.StorageType == StorageType.SQL)
+		{
+
+			<option value="SQL" selected >SQL</option>
+				<option value="XML">XML</option>
+			}
+			else  if (ToDoItemDAL.StorageType == StorageType.XML)
+			{
+			<option value="SQL">SQL</option>
+				<option value="XML" selected>XML</option>
+		}
+		}
+		
+	</select>
+	
+	<submit asp-action="ChangeStorageType"></submit>
+	
+</form>
 
 <div class = "table">
 
