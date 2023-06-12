@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Categories>
+  <Category>
+    <Id>2</Id>
+    <Name>Second Category</Name>
+  </Category>
+  <Category>
+    <Id>3</Id>
+    <Name>Third Category</Name>
+  </Category>
+  <Category>
+    <Id>1</Id>
+    <Name>First изменено</Name>
+  </Category>
+</Categories>

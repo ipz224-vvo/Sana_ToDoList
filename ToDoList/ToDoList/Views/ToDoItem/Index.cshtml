@@ -10,7 +10,7 @@
 	.table {
 	background-color:lightblue;
 	display: grid;
-	grid-template-columns: 1fr 10fr 4fr 4fr 4fr 6fr;
+	grid-template-columns: 1fr 10fr 4fr 4fr 6fr;
 	overflow-wrap: break-word;
 	padding: 5px;
 	text-align:center;
@@ -30,7 +30,7 @@
 
 	border-bottom: solid 5px black;
 	}
-	a > img, a {
+	a > img {
 	width: 40px;
 	height: 40px;
 	}
@@ -41,17 +41,15 @@
 		@{
 		if (ToDoItemDAL.StorageType == StorageType.SQL)
 		{
-
 			<option value="SQL" selected >SQL</option>
-				<option value="XML">XML</option>
-			}
-			else  if (ToDoItemDAL.StorageType == StorageType.XML)
-			{
+			<option value="XML">XML</option>
+		}
+		else  if (ToDoItemDAL.StorageType == StorageType.XML)
+		{
 			<option value="SQL">SQL</option>
-				<option value="XML" selected>XML</option>
+			<option value="XML" selected>XML</option>
 		}
 		}
-		
 	</select>
 	
 	<submit asp-action="ChangeStorageType"></submit>
@@ -62,30 +60,28 @@
 
 	<div class="grid-cell-header">Таск виконано?</div>
 	<div class="grid-cell-header">Текст таску</div>
-	<div class="grid-cell-header">Дата завершення</div>
-	<div class="grid-cell-header">Категорія</div>
-	<div class="grid-cell-header">Дата додавання таску</div>
+	<div class="grid-cell-header">Дата дедлайна</div>
+	<div class="grid-cell-header">Назва категорії</div>
 	<div></div>
 	
 	@foreach(var item in @Model)
 	{
 		<div class="grid-cell">
 			<form asp-controller="ToDoItem" asp-action="ChangeStatusToDoItem" name="form1" asp-route-id="@item.Id">
-			@if (item.Is_Finished)
+			@if (item.IsFinished)
 			{
-				<input asp-for="@item.Is_Finished" onclick="this.form.submit()" value="@item.Is_Finished" />
+				<input asp-for="@item.IsFinished" onclick="this.form.submit()" value="@item.IsFinished" />
 			}
 			else
 			{
-				<input asp-for="@item.Is_Finished" onclick="this.form.submit()" value="@item.Is_Finished"/>
+				<input asp-for="@item.IsFinished" onclick="this.form.submit()" value="@item.IsFinished"/>
 			}
 			
 			</form>
 		</div>
 		<div class="grid-cell">@item.Text</div>
-		<div class="grid-cell">@item.Due_Date</div>
+		<div class="grid-cell">@item.EndDate</div>
 		<div class="grid-cell">@item.Category.Name</div>
-		<div class="grid-cell">@item.Set_Date</div>
 		<div class="grid-cell">
 			<a asp-action="EditItem" target="_blank" asp-route-id="@item.Id"><img src="~/images/school.png" alt="Change"/></a>|
 			<a asp-action="DeleteItem" asp-route-id="@item.Id"><img src="~/images/bin.png" alt="Delete"/></a>
@@ -93,8 +89,8 @@
 	}    
 </div>
 
-<a asp-controller="ToDoItem" asp-action="CreateItem" target="_blank">Створити таск</a>
-<a asp-controller="Category" asp-action="Index" target="_blank">Редагувати категорії</a>
+<a asp-controller="ToDoItem" asp-action="CreateItem">Створити таск</a>
+<a asp-controller="Category" asp-action="Index">Редагувати категорії</a>
 
 
 

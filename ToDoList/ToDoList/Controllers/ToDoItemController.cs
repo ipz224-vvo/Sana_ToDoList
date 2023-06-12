@@ -9,26 +9,27 @@ namespace ToDoList.Controllers
 
 		public ToDoItemController() { }
 		// GET: TaskController
-		public ActionResult Index()
+		public async Task<ActionResult> Index()
 		{
 
-			var temp = ToDoItemDAL.GetToDoItems();
+			var temp = await ToDoItemDAL.GetToDoItemsAsync();
 
+			if (temp == null) return View(new List<ToDoItem>()); ;
 			var sorted = from item in temp
-						 orderby item.Due_Date ascending
+						 orderby item.EndDate ascending
 						 select item;
 			var sorted_list = sorted.ToList();
 			for (int i = 0; i < sorted_list.Count(); i++)
 			{
 				var item = sorted_list[i];
-				if (item.Due_Date == null)
+				if (item.EndDate == null)
 				{
 					sorted_list.RemoveAt(i);
 					sorted_list.Add(item);
 				}
 			}
 			temp = (from item in sorted_list
-					orderby item.Is_Finished
+					orderby item.IsFinished
 					select item).ToList<ToDoItem>();
 			return View(temp);
 		}
@@ -36,14 +37,14 @@ namespace ToDoList.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		// POST: TaskController/Details/5
-		public ActionResult ChangeStatusToDoItem(int id)
+		public async Task<ActionResult> ChangeStatusToDoItem(int id)
 		{
-			ToDoItem item = ToDoItemDAL.GetToDoItemById(id);
-			if (item.Is_Finished)
-				item.Is_Finished = false;
+			ToDoItem item = await ToDoItemDAL.GetToDoItemByIdAsync(id);
+			if (item.IsFinished)
+				item.IsFinished = false;
 			else
-				item.Is_Finished = true;
-			ToDoItemDAL.EditToDoItem(item);
+				item.IsFinished = true;
+			ToDoItemDAL.EditToDoItemAsync(item);
 			return RedirectToAction(nameof(Index));
 		}
 
@@ -56,34 +57,23 @@ namespace ToDoList.Controllers
 		// POST: TaskController/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult CreateItem(IFormCollection collection)
+		public async Task<ActionResult> CreateItem(IFormCollection collection)
 		{
 
-			var categoryes = CategoryDAL.GetCategories();
+			var categoryes = await CategoryDAL.GetCategoriesAsync();
 			var item = new ToDoItem();
 			item.Text = collection["Text"].ToString();
 
-			item.Is_Finished = collection["Is_Finished"].ToString().Split(',').First() == "true" ? true : false;
+			item.IsFinished = collection["IsFinished"].ToString().Split(',').First() == "true" ? true : false;
 
 			try
 			{
-				item.Due_Date = Convert.ToDateTime(collection["Due_Date"]);
+				item.EndDate = Convert.ToDateTime(collection["EndDate"]);
 			}
 			catch (FormatException ex)
 			{
-				item.Due_Date = null;
+				item.EndDate = null;
 			}
-
-
-			try
-			{
-				item.Set_Date = Convert.ToDateTime(collection["Set_Date"]);
-			}
-			catch (FormatException ex)
-			{
-				item.Set_Date = null;
-			}
-
 
 			for (int i = 0; i < categoryes.Count; i++)
 			{
@@ -95,7 +85,7 @@ namespace ToDoList.Controllers
 				}
 			}
 
-			ToDoItemDAL.AddToDoItem(item);
+			ToDoItemDAL.AddToDoItemAsync(item);
 			try
 			{
 				return RedirectToAction(nameof(Index));
@@ -115,30 +105,22 @@ namespace ToDoList.Controllers
 		// POST: TaskController/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult EditItem(int id, IFormCollection collection)
+		public async Task<ActionResult> EditItem(int id, IFormCollection collection)
 		{
-			var categoryes = CategoryDAL.GetCategories();
+			var categoryes = await CategoryDAL.GetCategoriesAsync();
 			var item = new ToDoItem();
 			item.Id = id;
 			item.Text = collection["Text"].ToString();
-			item.Is_Finished = collection["Is_Finished"].ToString().Split(',').First() == "true" ? true : false;
+			item.IsFinished = collection["IsFinished"].ToString().Split(',').First() == "true" ? true : false;
 			try
 			{
-				item.Due_Date = Convert.ToDateTime(collection["Due_Date"]);
+				item.EndDate = Convert.ToDateTime(collection["EndDate"]);
 			}
 			catch (FormatException ex)
 			{
-				item.Due_Date = null;
+				item.EndDate = null;
 			}
 
-			try
-			{
-				item.Set_Date = Convert.ToDateTime(collection["Set_Date"]);
-			}
-			catch (FormatException ex)
-			{
-				item.Set_Date = null;
-			}
 
 
 			for (int i = 0; i < categoryes.Count; i++)
@@ -150,7 +132,7 @@ namespace ToDoList.Controllers
 					break;
 				}
 			}
-			ToDoItemDAL.EditToDoItem(item);
+			ToDoItemDAL.EditToDoItemAsync(item);
 			try
 			{
 				return RedirectToAction(nameof(Index));
@@ -164,8 +146,14 @@ namespace ToDoList.Controllers
 		// GET: TaskController/Delete/5
 		public ActionResult DeleteItem(int id)
 		{
+			try
+			{
+				ToDoItemDAL.DeleteToDoItemAsync(id);
+			}
+			catch (Exception ex)
+			{
 
-			ToDoItemDAL.DeleteToDoItem(id);
+			}
 
 			return RedirectToAction(nameof(Index));
 		}
@@ -183,9 +171,15 @@ namespace ToDoList.Controllers
 		{
 			if (selectType == null) return null;
 			if (selectType == "SQL")
+			{
 				ToDoItemDAL.StorageType = StorageType.SQL;
+				CategoryDAL.StorageType = StorageType.SQL;
+			}
 			if (selectType == "XML")
+			{
 				ToDoItemDAL.StorageType = StorageType.XML;
+				CategoryDAL.StorageType = StorageType.XML;
+			}
 			return RedirectToAction(nameof(Index));
 		}
 	}

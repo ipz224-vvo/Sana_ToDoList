@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ToDoItems>
+  <ToDoItem>
+    <Id>5</Id>
+    <Text>Xml task</Text>
+    <CategoryId>2</CategoryId>
+    <IsFinished>False</IsFinished>
+  </ToDoItem>
+  <ToDoItem>
+    <Id>2</Id>
+    <Text>Test Task 2</Text>
+    <EndDate>11/10/2300 3:45:00 AM</EndDate>
+    <CategoryId>1</CategoryId>
+    <IsFinished>True</IsFinished>
+  </ToDoItem>
+  <ToDoItem>
+    <Id>1</Id>
+    <Text>Test Task 1</Text>
+	<EndDate>4/18/2024 1:00:00 PM</EndDate>
+    <CategoryId>2</CategoryId>
+    <IsFinished>False</IsFinished>
+  </ToDoItem>
+  <ToDoItem>
+    <Id>4</Id>
+    <Text>Xml SecondTask</Text>
+	<EndDate>6/24/2023 12:12:00 PM</EndDate>
+    <CategoryId>3</CategoryId>
+    <IsFinished>True</IsFinished>
+  </ToDoItem>
+  <ToDoItem>
+    <Id>3</Id>
+    <Text>Test Task 3</Text>
+	<EndDate>1/1/2000 1:01:00 AM</EndDate>
+    <CategoryId>3</CategoryId>
+    <IsFinished>True</IsFinished>
+  </ToDoItem>
+  <ToDoItem>
+    <Id>6</Id>
+    <Text>addddd234</Text>
+    <CategoryId>2</CategoryId>
+    <IsFinished>False</IsFinished>
+  </ToDoItem>
+</ToDoItems>

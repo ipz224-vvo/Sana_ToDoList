@@ -9,9 +9,6 @@
 			<th>
 				@Html.DisplayNameFor(model => model.Name)
 			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Description)
-			</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -23,10 +20,6 @@
 				@Html.DisplayFor(modelItem => item.Name)
 			</td>
 			<td>
-				@Html.DisplayFor(modelItem => item.Description)
-			</td>
-			<td>
-				@Html.ActionLink("Edit", "EditCategory", new {  id=item.Id  }) |
 				@Html.ActionLink("Delete", "DeleteCategory", new {  id=item.Id  })
 				
 			</td>

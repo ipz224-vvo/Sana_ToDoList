@@ -1,17 +1,19 @@
-﻿namespace ToDoList.DAL.Models
+﻿using Microsoft.Build.Framework;
+
+namespace ToDoList.DAL.Models
 {
-    public class Category
-    {
-        public int Id { get; set; }
+	public class Category
+	{
+		[Required]
+		public int Id { get; set; }
 
-        public string Name { get; set; }
+		[Required]
+		public string Name { get; set; }
 
-        public string? Description { get; set; }
+		public override string ToString()
+		{
+			return $"Name";
+		}
 
-        public override string ToString()
-        {
-            return $"Name";
-        }
-
-    }
+	}
 }
