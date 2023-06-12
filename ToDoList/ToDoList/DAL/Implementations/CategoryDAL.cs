@@ -17,12 +17,12 @@ namespace ToDoList.DAL.Implementations
 			else if (storageType == "XML")
 				_storageType = StorageType.XML;
 		}
-		public static async Task<List<Category>> GetCategoriesAsync()
+		public static async Task<IQueryable<Category>> GetCategoriesAsync()
 		{
 			if (_storageType == StorageType.SQL)
 			{
 				using var connection = DBConnection.CreateConnection();
-				return connection.Query<Category>("SELECT * FROM [Categories]").ToList();
+				return connection.Query<Category>("SELECT * FROM [Categories]").AsQueryable();
 			}
 			else if (_storageType == StorageType.XML)
 			{
@@ -49,7 +49,7 @@ namespace ToDoList.DAL.Implementations
 						}
 					}
 				}
-				return categories;
+				return categories.AsQueryable();
 			}
 			return null;
 		}

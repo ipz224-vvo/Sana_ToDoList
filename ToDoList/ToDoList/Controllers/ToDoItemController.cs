@@ -14,7 +14,7 @@ namespace ToDoList.Controllers
 
 			var temp = await ToDoItemDAL.GetToDoItemsAsync();
 
-			if (temp == null) return View(new List<ToDoItem>()); ;
+			if (temp == null) return View(null); ;
 			var sorted = from item in temp
 						 orderby item.EndDate ascending
 						 select item;
@@ -30,7 +30,7 @@ namespace ToDoList.Controllers
 			}
 			temp = (from item in sorted_list
 					orderby item.IsFinished
-					select item).ToList<ToDoItem>();
+					select item).AsQueryable();
 			return View(temp);
 		}
 
@@ -60,7 +60,7 @@ namespace ToDoList.Controllers
 		public async Task<ActionResult> CreateItem(IFormCollection collection)
 		{
 
-			var categoryes = await CategoryDAL.GetCategoriesAsync();
+			var categoryes = (await CategoryDAL.GetCategoriesAsync()).ToList();
 			var item = new ToDoItem();
 			item.Text = collection["Text"].ToString();
 
@@ -107,7 +107,7 @@ namespace ToDoList.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<ActionResult> EditItem(int id, IFormCollection collection)
 		{
-			var categoryes = await CategoryDAL.GetCategoriesAsync();
+			var categoryes = (await CategoryDAL.GetCategoriesAsync()).ToList();
 			var item = new ToDoItem();
 			item.Id = id;
 			item.Text = collection["Text"].ToString();

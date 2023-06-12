@@ -65,19 +65,19 @@ namespace ToDoList.DAL.Implementations
 					else if (childNode.Name == "IsFinished")
 						item.IsFinished = Convert.ToBoolean(childNode.InnerText);
 				}
-				List<Category> categories = await CategoryDAL.GetCategoriesAsync();
+				IQueryable<Category> categories = await CategoryDAL.GetCategoriesAsync();
 				item.Category = categories.First(x => x.Id == item.CategoryId);
 				return item;
 			}
 			return null;
 		}
 
-		public static async Task<List<ToDoItem>> GetToDoItemsAsync()
+		public static async Task<IQueryable<ToDoItem>> GetToDoItemsAsync()
 		{
 			if (_storageType == StorageType.SQL)
 			{
 				using var connection = DBConnection.CreateConnection();
-				var entyties = connection.Query<ToDoItem>("SELECT * FROM [Tasks]").ToList();
+				var entyties = connection.Query<ToDoItem>("SELECT * FROM [Tasks]").AsQueryable();
 				foreach (var item in entyties)
 				{
 					item.Category = connection.QueryFirstOrDefault<Category>(
@@ -88,12 +88,13 @@ namespace ToDoList.DAL.Implementations
 			}
 			else if (_storageType == StorageType.XML)
 			{
+				//IQueryable<ToDoItem> toDoItems = new Queryable<ToDoItem>();
 				List<ToDoItem> toDoItems = new List<ToDoItem>();
 				XmlDocument xmlToDoDocument = new XmlDocument();
 				xmlToDoDocument.Load(DBConnection.GetXMLToDoItemsPath());
-				if (xmlToDoDocument == null) return new List<ToDoItem>();
+				if (xmlToDoDocument == null) return null;
 				XmlElement xmlToDoRoot = xmlToDoDocument.DocumentElement;
-				if (xmlToDoRoot == null) return new List<ToDoItem>();
+				if (xmlToDoRoot == null) return null;
 
 				foreach (XmlNode node in xmlToDoRoot.ChildNodes)
 				{
@@ -117,13 +118,13 @@ namespace ToDoList.DAL.Implementations
 					}
 					toDoItems.Add(item);
 				}
-				List<Category> categories = await CategoryDAL.GetCategoriesAsync();
+				IQueryable<Category> categories = await CategoryDAL.GetCategoriesAsync();
 				foreach (ToDoItem toDoItem in toDoItems)
 				{
 					toDoItem.Category = categories.FirstOrDefault(x => x.Id == toDoItem.CategoryId);
 				}
 
-				return toDoItems;
+				return toDoItems.AsQueryable();
 			}
 
 			return null;

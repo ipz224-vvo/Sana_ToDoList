@@ -8,7 +8,7 @@ namespace ToDoList.DAL.Interfaces
 		public static StorageType GetStorageType() { return _storageType; }
 		public static void ChangeStorageType(string storageType) { }
 		public static async Task<ToDoItem> GetToDoItemById(int id) { return null; }
-		public static async Task<List<ToDoItem>> GetToDoItemsAsync() { return null; }
+		public static async Task<IQueryable<ToDoItem>> GetToDoItemsAsync() { return null; }
 		public static async void AddToDoItemAsync(ToDoItem toDoItem) { }
 		public static async void EditToDoItemAsync(ToDoItem toDoItem) { }
 		public static async void DeleteToDoItemAsync(int id) { }
