@@ -170,7 +170,12 @@ namespace ToDoList.Controllers
 		public ActionResult ChangeStorageType(string selectType)
 		{
 			if (selectType == null) return null;
-			if (selectType == "SQL")
+			else if (selectType == "SQL" || selectType == "XML")
+			{
+				ToDoItemDAL.ChangeStorageType(selectType);
+				CategoryDAL.ChangeStorageType(selectType);
+			}
+			/*if (selectType == "SQL")
 			{
 				ToDoItemDAL.StorageType = StorageType.SQL;
 				CategoryDAL.StorageType = StorageType.SQL;
@@ -179,7 +184,7 @@ namespace ToDoList.Controllers
 			{
 				ToDoItemDAL.StorageType = StorageType.XML;
 				CategoryDAL.StorageType = StorageType.XML;
-			}
+			}*/
 			return RedirectToAction(nameof(Index));
 		}
 	}

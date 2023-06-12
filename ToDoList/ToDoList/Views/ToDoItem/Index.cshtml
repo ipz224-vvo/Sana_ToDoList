@@ -39,12 +39,12 @@
 <form asp-controller="ToDoItem" asp-action="ChangeStorageType" method="post" >
 	<select name="selectType" onblur="this.form.submit()">
 		@{
-		if (ToDoItemDAL.StorageType == StorageType.SQL)
+		if (ToDoItemDAL.GetStorageType() == StorageType.SQL)
 		{
 			<option value="SQL" selected >SQL</option>
 			<option value="XML">XML</option>
 		}
-		else  if (ToDoItemDAL.StorageType == StorageType.XML)
+			else if (ToDoItemDAL.GetStorageType() == StorageType.XML)
 		{
 			<option value="SQL">SQL</option>
 			<option value="XML" selected>XML</option>

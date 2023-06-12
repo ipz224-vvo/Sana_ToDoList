@@ -6,16 +6,24 @@ namespace ToDoList.DAL.Implementations
 {
 	public class CategoryDAL
 	{
-		public static StorageType StorageType;
+		private static StorageType _storageType;
 
+
+		public static void ChangeStorageType(string storageType)
+		{
+			if (storageType == "SQL")
+				_storageType = StorageType.SQL;
+			else if (storageType == "XML")
+				_storageType = StorageType.XML;
+		}
 		public static async Task<List<Category>> GetCategoriesAsync()
 		{
-			if (StorageType == StorageType.SQL)
+			if (_storageType == StorageType.SQL)
 			{
 				using var connection = DBConnection.CreateConnection();
 				return connection.Query<Category>("SELECT * FROM [Categories]").ToList();
 			}
-			else if (StorageType == StorageType.XML)
+			else if (_storageType == StorageType.XML)
 			{
 				List<Category> categories = new List<Category>();
 				XmlDocument xmlCategoryDocument = new XmlDocument();
@@ -46,12 +54,12 @@ namespace ToDoList.DAL.Implementations
 		}
 		public static async Task<Category> GetCategoryByIdAsync(int id)
 		{
-			if (StorageType == StorageType.SQL)
+			if (_storageType == StorageType.SQL)
 			{
 				using var connection = DBConnection.CreateConnection();
 				return connection.QueryFirstOrDefault<Category>("SELECT * FROM [Categories] WHERE Id=@Id", new { Id = id });
 			}
-			else if (StorageType == StorageType.XML)
+			else if (_storageType == StorageType.XML)
 			{
 				XmlDocument xmlCategoryDocument = new XmlDocument();
 				xmlCategoryDocument.Load(DBConnection.GetXMLCategoriesPath());
@@ -75,7 +83,7 @@ namespace ToDoList.DAL.Implementations
 		}
 		public static async void AddCategoryAsync(Category category)
 		{
-			if (StorageType == StorageType.SQL)
+			if (_storageType == StorageType.SQL)
 			{
 				using var connection = DBConnection.CreateConnection();
 				connection.Query<Category>("INSERT INTO [Categories] (Name) " +
@@ -85,7 +93,7 @@ namespace ToDoList.DAL.Implementations
 						Name = category.Name,
 					});
 			}
-			else if (StorageType == StorageType.XML)
+			else if (_storageType == StorageType.XML)
 			{
 				XmlDocument xDoc = new XmlDocument();
 				xDoc.Load(DBConnection.GetXMLCategoriesPath());
@@ -117,12 +125,12 @@ namespace ToDoList.DAL.Implementations
 		}
 		public static async void DeleteCategoryAsync(int id)
 		{
-			if (StorageType == StorageType.SQL)
+			if (_storageType == StorageType.SQL)
 			{
 				using var connection = DBConnection.CreateConnection();
 				var ent = connection.QueryFirstOrDefault<ToDoItem>("DELETE FROM [Categories] WHERE Id=@Id", new { Id = id });
 			}
-			else if (StorageType == StorageType.XML)
+			else if (_storageType == StorageType.XML)
 			{
 				XmlDocument xDoc = new XmlDocument();
 				xDoc.Load(DBConnection.GetXMLCategoriesPath());

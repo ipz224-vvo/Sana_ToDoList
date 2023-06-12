@@ -6,7 +6,7 @@ namespace ToDoList.DAL.Implementations
 {
 	public class ToDoItemDAL
 	{
-		public static StorageType StorageType;
+		public static StorageType _storageType;
 		public static string DateTimeToString(DateTime? dateTime)
 		{
 			DateTime temp_date;
@@ -15,9 +15,20 @@ namespace ToDoList.DAL.Implementations
 
 			return temp_date.ToString("yyyy-MM-dd HH:mm");
 		}
-		public async static Task<ToDoItem> GetToDoItemByIdAsync(int id)
+		public static StorageType GetStorageType()
 		{
-			if (StorageType == StorageType.SQL)
+			return _storageType;
+		}
+		public static void ChangeStorageType(string storageType)
+		{
+			if (storageType == "SQL")
+				_storageType = StorageType.SQL;
+			else if (storageType == "XML")
+				_storageType = StorageType.XML;
+		}
+		public static async Task<ToDoItem> GetToDoItemByIdAsync(int id)
+		{
+			if (_storageType == StorageType.SQL)
 			{
 				using var connection = DBConnection.CreateConnection();
 				var ent = connection.QueryFirstOrDefault<ToDoItem>("SELECT * FROM [Tasks] WHERE Id=@Id",
@@ -26,7 +37,7 @@ namespace ToDoList.DAL.Implementations
 					new { cat_id = ent.CategoryId });
 				return ent;
 			}
-			else if (StorageType == StorageType.XML)
+			else if (_storageType == StorageType.XML)
 			{
 				XmlDocument xmlToDoDocument = new XmlDocument();
 				xmlToDoDocument.Load(DBConnection.GetXMLToDoItemsPath());
@@ -62,7 +73,7 @@ namespace ToDoList.DAL.Implementations
 
 		public static async Task<List<ToDoItem>> GetToDoItemsAsync()
 		{
-			if (StorageType == StorageType.SQL)
+			if (_storageType == StorageType.SQL)
 			{
 				using var connection = DBConnection.CreateConnection();
 				var entyties = connection.Query<ToDoItem>("SELECT * FROM [Tasks]").ToList();
@@ -74,7 +85,7 @@ namespace ToDoList.DAL.Implementations
 				}
 				return entyties;
 			}
-			else if (StorageType == StorageType.XML)
+			else if (_storageType == StorageType.XML)
 			{
 				List<ToDoItem> toDoItems = new List<ToDoItem>();
 				XmlDocument xmlToDoDocument = new XmlDocument();
@@ -118,7 +129,7 @@ namespace ToDoList.DAL.Implementations
 		}
 		public static async void AddToDoItemAsync(ToDoItem toDoItem)
 		{
-			if (StorageType == StorageType.SQL)
+			if (_storageType == StorageType.SQL)
 			{
 
 				using var connection = DBConnection.CreateConnection();
@@ -132,7 +143,7 @@ namespace ToDoList.DAL.Implementations
 						IsFinished = toDoItem.IsFinished
 					});
 			}
-			else if (StorageType == StorageType.XML)
+			else if (_storageType == StorageType.XML)
 			{
 
 				XmlDocument xDoc = new XmlDocument();
@@ -184,7 +195,7 @@ namespace ToDoList.DAL.Implementations
 		}
 		public static async void EditToDoItemAsync(ToDoItem toDoItem)
 		{
-			if (StorageType == StorageType.SQL)
+			if (_storageType == StorageType.SQL)
 			{
 
 				using var connection = DBConnection.CreateConnection();
@@ -200,7 +211,7 @@ namespace ToDoList.DAL.Implementations
 						Id = toDoItem.Id
 					});
 			}
-			else if (StorageType == StorageType.XML)
+			else if (_storageType == StorageType.XML)
 			{
 				DeleteToDoItemAsync(toDoItem.Id);
 				AddToDoItemAsync(toDoItem);
@@ -208,12 +219,12 @@ namespace ToDoList.DAL.Implementations
 		}
 		public static async void DeleteToDoItemAsync(int id)
 		{
-			if (StorageType == StorageType.SQL)
+			if (_storageType == StorageType.SQL)
 			{
 				using var connection = DBConnection.CreateConnection();
 				var ent = connection.QueryFirstOrDefault<ToDoItem>("DELETE FROM [Tasks] WHERE Id=@Id", new { Id = id });
 			}
-			else if (StorageType == StorageType.XML)
+			else if (_storageType == StorageType.XML)
 			{
 				XmlDocument xDoc = new XmlDocument();
 				xDoc.Load(DBConnection.GetXMLToDoItemsPath());
