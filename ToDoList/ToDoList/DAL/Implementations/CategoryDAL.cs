@@ -1,10 +1,11 @@
 ﻿using Dapper;
 using System.Xml;
+using ToDoList.DAL.Interfaces;
 using ToDoList.DAL.Models;
 
 namespace ToDoList.DAL.Implementations
 {
-	public class CategoryDAL
+	public class CategoryDAL : ICategoryDAL
 	{
 		private static StorageType _storageType;
 

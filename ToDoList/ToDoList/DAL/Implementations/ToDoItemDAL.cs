@@ -1,10 +1,11 @@
 ﻿using Dapper;
 using System.Xml;
+using ToDoList.DAL.Interfaces;
 using ToDoList.DAL.Models;
 
 namespace ToDoList.DAL.Implementations
 {
-	public class ToDoItemDAL
+	public class ToDoItemDAL : IToDoItemDAL
 	{
 		public static StorageType _storageType;
 		public static string DateTimeToString(DateTime? dateTime)

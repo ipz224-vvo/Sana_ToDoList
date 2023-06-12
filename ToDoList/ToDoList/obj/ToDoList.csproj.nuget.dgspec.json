@@ -49,6 +49,10 @@
               "target": "Package",
               "version": "[2.0.123, )"
             },
+            "HotChocolate.Types": {
+              "target": "Package",
+              "version": "[13.2.1, )"
+            },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
               "version": "[5.1.1, )"
